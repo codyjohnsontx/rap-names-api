@@ -1,41 +1,36 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 const PORT = 8000;
+const rappers = require("./netlify/functions/rappers");
 
 app.use(cors());
 
-const rappers = {
-  "21 savage": {
-    age: 29,
-    birthName: "Sheyaa Bin Abraham-Joseph",
-    birthLocation: "London, England",
-  },
-  "50 cent": {
-    age: 48,
-    birthName: "Curtis Jackson",
-    birthLocation: "Queens",
-  },
-  "chance the rapper": {
-    age: 29,
-    birthName: "Chancelor Bennett",
-    birthLocaion: "Chicago, Illinois",
-  },
-  unknown: {
-    age: 0,
-    birthName: "unknown",
-    birthLocation: "unknown",
-  },
-};
+app.use(express.static(path.join(__dirname, "public")));
+
+function capitalizeName(name) {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
 
 app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/index.html");
+  response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 app.get("/api/:name", (request, response) => {
   const rapperName = request.params.name.toLowerCase();
-  if (rappers[rapperName]) {
-    response.json(rappers[rapperName]);
+
+  const foundRapper = Object.keys(rappers).find(
+    (key) => key.toLowerCase() === rapperName
+  );
+
+  if (foundRapper) {
+    const responseRapper = { ...rappers[foundRapper] };
+    responseRapper.name = capitalizeName(foundRapper);
+    response.json(responseRapper);
   } else {
     response.json(rappers["unknown"]);
   }
