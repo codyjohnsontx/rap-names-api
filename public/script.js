@@ -1,12 +1,12 @@
-// public/script.js
-
 document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("rapperSelect")
     .addEventListener("change", function () {
       const rapperName = this.value;
       if (rapperName) {
-        fetch(`/api/${encodeURIComponent(rapperName)}`)
+        fetch(
+          `/.netlify/functions/getRapper?name=${encodeURIComponent(rapperName)}`
+        )
           .then((response) => response.json())
           .then((data) => {
             const rapperInfoDiv = document.getElementById("rapperInfo");
