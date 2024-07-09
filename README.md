@@ -1,6 +1,6 @@
 # Rap Names API
 
-Welcome to the Rap Names API! This project provides comprehensive rapper profiles using serverless functions deployed on Netlify. The frontend is styled using Tailwind CSS in a Brutalist style.
+Welcome to the Rap Names API! This project provides comprehensive rapper profiles using serverless functions deployed on Netlify. The frontend is styled using Tailwind CSS in a very simple Brutalist style.
 
 ## Table of Contents
 
